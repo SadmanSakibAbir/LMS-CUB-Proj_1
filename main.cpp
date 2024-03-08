@@ -1,13 +1,13 @@
 #include <iostream>
 #include <string>
-#include <cstdlib> // For exit()
+#include <cstdlib> 
 
 using namespace std;
 
 class Library {
 public:
     int b_id;
-    string b_name; // Use string for names
+    string b_name; 
     string author;
     string s_name;
     int s_id;
