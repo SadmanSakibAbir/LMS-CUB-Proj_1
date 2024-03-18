@@ -17,13 +17,13 @@ public:
 };
 
 // Function to save book details to a text file
-void saveBooksToFile(Library lib[], int count) {
+void saveBooksToFile(Library lib[], int count, int savedCount) {
     // Open file for appending (to add new records without deleting previous ones)
     ofstream file("book_list.txt", ios::app); // Open file in append mode
 
     if (file.is_open()) {
-        // Write book details to the file
-        for (int i = 0; i < count; i++) {
+        // Write only the unsaved books to the file
+        for (int i = savedCount; i < count; i++) {
             file << "Book ID: " << lib[i].b_id << endl;
             file << "Book Name: " << lib[i].b_name << endl;
             file << "Author Name: " << lib[i].author << endl;
@@ -33,7 +33,7 @@ void saveBooksToFile(Library lib[], int count) {
             file << endl; // Add an empty line between each book
         }
         file.close(); // Close the file
-        cout << "Book list saved to 'book_list.txt'." << endl;
+        cout << "Unsaved book list saved to 'book_list.txt'." << endl;
     } else {
         cout << "Unable to open file." << endl;
     }
@@ -59,6 +59,7 @@ int main() {
     Library lib[20]; // Array to store library objects
     int input = 0; // Variable to store user input
     int count = 0; // Variable to keep track of number of books
+    int savedCount = 0; // Variable to keep track of number of books already saved
 
     // Main menu loop
     while (input != 5) {
@@ -117,12 +118,13 @@ int main() {
 
             case 3:
                 // Save books to file
-                saveBooksToFile(lib, count);
+                saveBooksToFile(lib, count, savedCount);
+                savedCount = count; // Update savedCount to reflect all books being saved
                 break;
 
             case 4:
-                // Save books to file before exiting
-                saveBooksToFile(lib, count);
+                // Save only unsaved books to file before exiting
+                saveBooksToFile(lib, count, savedCount);
                 exit(0); // Exit the program
                 break;
 
